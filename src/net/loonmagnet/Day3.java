@@ -18,9 +18,6 @@ public class Day3 {
             Set<Character> compartment2 = new HashSet<>(List.of(Arrays.copyOfRange(chars, splitSize, chars.length)));
 
             compartment1.retainAll(compartment2);
-            if(compartment1.size() != 1) {
-                System.out.println("ERROR!");
-            }
             int asciiValue = getAsciiValue(compartment1);
             priorityTotal += asciiValue;
         }
