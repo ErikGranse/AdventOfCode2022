@@ -18,7 +18,8 @@ public class Day3 {
             Set<Character> compartment2 = new HashSet<>(List.of(Arrays.copyOfRange(chars, splitSize, chars.length)));
 
             compartment1.retainAll(compartment2);
-            int asciiValue = getAsciiValue(compartment1);
+            Character[] value = compartment1.toArray(new Character[0]);
+            int asciiValue = Utils.convertToNumeric(value[0]);
             priorityTotal += asciiValue;
         }
         System.out.println(priorityTotal);
@@ -31,7 +32,8 @@ public class Day3 {
 
             compartment1.retainAll(compartment2);
             compartment1.retainAll(compartment3);
-            priorityTotal += getAsciiValue(compartment1);
+            Character[] value = compartment1.toArray(new Character[0]);
+            priorityTotal += Utils.convertToNumeric(value[0]);
         }
         System.out.println(priorityTotal);
     }
@@ -40,18 +42,7 @@ public class Day3 {
         Character[] chars = rucksacks.get(i).chars()
                 .mapToObj(c -> (char) c).toArray(Character[]::new);
 
-        Set<Character> compartment1 = new HashSet<>(List.of(chars));
-        return compartment1;
+        return new HashSet<>(List.of(chars));
     }
 
-    private static int getAsciiValue(Set<Character> compartment1) {
-        Character[] value = compartment1.toArray(new Character[0]);
-        int asciiValue = (int)value[0];
-        if (asciiValue > 90) {
-            asciiValue -= 96;
-        } else {
-            asciiValue -= 38;
-        }
-        return asciiValue;
-    }
 }
