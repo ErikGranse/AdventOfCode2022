@@ -8,40 +8,49 @@ public class Day2 {
     public static void main(String... args) {
 
         var rounds = Utils.readFile("data/day2.txt");
-        System.out.println("Part 1: " + rounds.stream().map(scores1()::get).reduce(Integer::sum).get());
-        System.out.println("Part 2: " + rounds.stream().map(scores2()::get).reduce(Integer::sum).get());
-
+        System.out.println("Part 1: " + rounds.stream().map(Day2::resolve1).reduce(Integer::sum).get());
+        System.out.println("Part 2: " + rounds.stream().map(Day2::resolve2).reduce(Integer::sum).get());
     }
 
-    private static Map<String, Integer> scores1() {
-        var scores = new HashMap<String, Integer>();
+    private static Integer resolve1(String round) {
+        String[] values = round.split(" ");
+        var them = throwMap().get(values[0]);
+        var me = throwMap().get(values[1]);
 
-        scores.put("A X", 3 + 1);
-        scores.put("A Y", 6 + 2);
-        scores.put("A Z", 0 + 3);
-        scores.put("B X", 0 + 1);
-        scores.put("B Y", 3 + 2);
-        scores.put("B Z", 6 + 3);
-        scores.put("C X", 6 + 1);
-        scores.put("C Y", 0 + 2);
-        scores.put("C Z", 3 + 3);
-
-        return scores;
+        if (them + 1 == me || them - 2 == me) {
+            return 6 + me;
+        } else if (them == me) {
+            return 3 + me;
+        }
+        return me;
     }
 
-    private static Map<String, Integer> scores2() {
-        var scores = new HashMap<String, Integer>();
+    private static Integer resolve2(String round) {
+        String[] values = round.split(" ");
+        var them = throwMap().get(values[0]);
+        var target = throwMap().get(values[1]);
 
-        scores.put("A X", 0 + 3);
-        scores.put("A Y", 3 + 1);
-        scores.put("A Z", 6 + 2);
-        scores.put("B X", 0 + 1);
-        scores.put("B Y", 3 + 2);
-        scores.put("B Z", 6 + 3);
-        scores.put("C X", 0 + 2);
-        scores.put("C Y", 3 + 3);
-        scores.put("C Z", 6 + 1);
-
-        return scores;
+        switch (target) {
+            case 1 -> {
+                return them == 1 ? them + 2 : them - 1;
+            }
+            case 2 -> {
+                return them + 3;
+            }
+            case 3 -> {
+                return (them == 3 ? them - 2 : them + 1) + 6;
+            }
+        }
+        return 0;
+    }
+    private static Map<String, Integer> throwMap() {
+        var throwMap = new HashMap<String, Integer>();
+        throwMap.put("A", 1);
+        throwMap.put("B", 2);
+        throwMap.put("C", 3);
+        throwMap.put("X", 1);
+        throwMap.put("Y", 2);
+        throwMap.put("Z", 3);
+        return throwMap;
     }
 }
