@@ -1,7 +1,7 @@
 package net.loonmagnet
 
 
-fun main(args: Array<String>) {
+fun main() {
     val lines = Utils.readFile("data/day4.txt")
     var overlaps = 0
     var intersections = 0
