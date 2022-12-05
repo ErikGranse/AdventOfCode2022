@@ -1,5 +1,7 @@
 package net.loonmagnet;
 
+import static java.lang.Integer.*;
+
 public class Day4 {
 
     public static void main(String... args) {
@@ -8,16 +10,13 @@ public class Day4 {
         var inclusive_ranges = 0;
         var overlap_ranges = 0;
         for (var line : data) {
-            String[] ranges = line.split(",");
-            String[] left = ranges[0].split("-");
-            String[] right = ranges[1].split("-");
-            var leftLower = Integer.parseInt(left[0]);
-            var leftUpper = Integer.parseInt(left[1]);
-            var rightLower = Integer.parseInt(right[0]);
-            var rightUpper = Integer.parseInt(right[1]);
+            String[] ranges = line.split("[-,]");
+            var leftLower = parseInt(ranges[0]);
+            var leftUpper = parseInt(ranges[1]);
+            var rightLower = parseInt(ranges[2]);
+            var rightUpper = parseInt(ranges[3]);
             if(checkInclusive(leftLower, leftUpper, rightLower, rightUpper)) inclusive_ranges++;
             if(checkOverlap(leftLower, leftUpper, rightLower, rightUpper)) overlap_ranges++;
-
         }
         System.out.println(inclusive_ranges);
         System.out.println(overlap_ranges);
