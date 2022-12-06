@@ -1,10 +1,12 @@
-package net.loonmagnet;
+package net.loonmagnet.java;
+
+import net.loonmagnet.util.Utils;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.List;
 
-public class Day5J {
+public class Day5 {
 
     public static void main(String... args) {
         HashMap<String, ArrayDeque<String>> stackMap = initializeStackMap();

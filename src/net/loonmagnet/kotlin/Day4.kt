@@ -1,4 +1,6 @@
-package net.loonmagnet
+package net.loonmagnet.kotlin
+
+import net.loonmagnet.util.Utils
 
 
 fun main() {

@@ -1,4 +1,6 @@
-package net.loonmagnet;
+package net.loonmagnet.java;
+
+import net.loonmagnet.util.Utils;
 
 import static java.lang.Integer.*;
 

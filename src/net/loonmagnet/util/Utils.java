@@ -1,11 +1,10 @@
-package net.loonmagnet;
+package net.loonmagnet.util;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Utils {
@@ -33,7 +32,7 @@ public class Utils {
      * @param character which should be lower- or upper-case A through Z
      * @return the 1-based index of an ordered array from `a` to `Z`
      */
-    static int convertToNumeric(Character character) {
+    public static int convertToNumeric(Character character) {
         int asciiValue = (int) character;
         return asciiValue > 90 ? asciiValue - 96 : asciiValue - 38;
     }

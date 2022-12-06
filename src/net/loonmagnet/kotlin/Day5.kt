@@ -1,4 +1,5 @@
-package net.loonmagnet
+package net.loonmagnet.kotlin
+import net.loonmagnet.util.Utils
 import java.util.ArrayDeque
 
 fun main() {
