@@ -3,6 +3,13 @@ package net.loonmagnet.java;
 import net.loonmagnet.util.Utils;
 
 import java.util.HashSet;
+
+import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
 import java.util.Set;
 
 public class Day8 {
@@ -13,6 +20,13 @@ public class Day8 {
         final int dimY = data.size();
         final int dimX = data.get(0).length();
 
+        int[][] trees = initialize(data, dimY, dimX);
+        System.out.printf("Part 1: %d%n", part1(dimY, dimX, trees));
+        System.out.printf("Part 2: %d%n", part2(dimY, dimX, trees));
+    }
+
+    @NotNull
+    protected static int[][] initialize(List<String> data, int dimY, int dimX) {
         int[][] trees = new int[dimX][dimY];
 
         for (int y = 0; y < dimY; y++) {
@@ -21,11 +35,10 @@ public class Day8 {
                 trees[x][y] = Character.getNumericValue(row[x]);
             }
         }
-        System.out.printf("Part 1: %d%n", part1(dimY, dimX, trees));
-        System.out.printf("Part 2: %d%n", getMaxVisibility(dimY, dimX, trees));
+        return trees;
     }
 
-    private static int getMaxVisibility(int dimY, int dimX, int[][] trees) {
+    protected static int part2(int dimY, int dimX, int[][] trees) {
         int maxVisibility = 0;
         for (int yCoord = 0; yCoord < dimY; yCoord++) {
             for (int xCoord = 0; xCoord < dimX; xCoord++) {
@@ -67,7 +80,7 @@ public class Day8 {
         return maxVisibility;
     }
 
-    private static int part1(int dimY, int dimX, int[][] trees) {
+    protected static int part1(int dimY, int dimX, int[][] trees) {
         Set<Coordinate> visibleTrees = new HashSet<>();
 
         //left to right
@@ -116,3 +129,30 @@ public class Day8 {
 }
 
 record Coordinate(int x, int y) {} //Why doesn't Java have tuples built in?!?
+
+class Day8Test {
+
+    static List<String> data;
+    static int dimY;
+    static int dimX;
+
+    static int[][] trees;
+
+    @BeforeAll
+    public static void setup() {
+        data = Utils.readFile("data/day8-sample.txt");
+        dimY = data.size();
+        dimX = data.get(0).length();
+        trees = Day8.initialize(data, dimY, dimX);
+
+    }
+    @Test
+    public void testPart1() {
+        Assertions.assertEquals(21, Day8.part1(dimY, dimX, trees));
+    }
+
+    @Test
+    public void testPart2() {
+        Assertions.assertEquals(8, Day8.part2(dimY, dimX, trees));
+    }
+}
