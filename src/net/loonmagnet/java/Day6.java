@@ -12,11 +12,10 @@ public class Day6 {
 
     public static void main(String... args) {
 
-        var data = Utils.readFile("data/day6.txt");
+        var data = Utils.readFile("data/day6.txt").get(0).toCharArray();
 
-        var chars = data.get(0).toCharArray();
-        System.out.println(findMarker(4, chars));
-        System.out.println(findMarker(14, chars));
+        System.out.println(findMarker(4, data));
+        System.out.println(findMarker(14, data));
     }
 
     protected static int findMarker(int minLength, char[] chars) {
