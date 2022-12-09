@@ -48,9 +48,7 @@ record Knot(int x, int y) {
     Knot follow(Knot head) {
         final int xDist = head.x() - this.x;
         final int yDist = head.y() - this.y;
-        if (abs(xDist) == 2) {
-            return new Knot(this.x + signum(xDist), this.y + signum(yDist));
-        } else if (abs(yDist) == 2) {
+        if (abs(xDist) == 2 || abs(yDist) == 2) {
             return new Knot(this.x + signum(xDist), this.y + signum(yDist));
         }
         return this;
