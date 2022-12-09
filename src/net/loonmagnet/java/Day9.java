@@ -49,9 +49,9 @@ record Knot(int x, int y) {
         final int xDist = head.x() - this.x;
         final int yDist = head.y() - this.y;
         if (abs(xDist) == 2) {
-            return new Knot(this.x + signum(xDist), this.y + (yDist == 0 ? 0 : signum(yDist)));
+            return new Knot(this.x + signum(xDist), this.y + signum(yDist));
         } else if (abs(yDist) == 2) {
-            return new Knot(this.x + (xDist == 0 ? 0 : signum(xDist)), this.y + signum(yDist));
+            return new Knot(this.x + signum(xDist), this.y + signum(yDist));
         }
         return this;
     }
