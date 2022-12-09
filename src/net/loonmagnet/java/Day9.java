@@ -7,22 +7,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static java.lang.Integer.signum;
 import static java.lang.Math.abs;
 
 public class Day9 {
 
     public static void main(String... args) {
-
         moveRope(2);
         moveRope(10);
     }
 
     private static void moveRope(int length) {
-        List<Knot> knots = getRope(length);
+        final List<Knot> knots = getRope(length);
 
-        Set<Knot> locations = new HashSet<>();
+        final Set<Knot> locations = new HashSet<>();
         for(String line : Utils.readFile("data/day9.txt")) {
-            String[] fields = line.split(" ");
+            final String[] fields = line.split(" ");
             for (int i = 0; i < Integer.parseInt(fields[1]); i++) {
                 knots.set(0, knots.get(0).move(fields[0]));
                 for (int kn = 1; kn < length; kn++) {
@@ -35,13 +35,11 @@ public class Day9 {
     }
 
     static List<Knot> getRope(int length) {
-        List<Knot> knots = new ArrayList<>();
+        final List<Knot> knots = new ArrayList<>();
         for (int i = 0; i < length; i++) knots.add(new Knot(0,0));
         return knots;
     }
 }
-
-
 
 record Knot(int x, int y) {
 
@@ -56,16 +54,12 @@ record Knot(int x, int y) {
     }
 
     Knot follow(Knot head) {
-        int xDist = head.x() - this.x;
-        int yDist = head.y() - this.y;
+        final int xDist = head.x() - this.x;
+        final int yDist = head.y() - this.y;
         if (abs(xDist) == 2) {
-            int newX = this.x + Integer.signum(xDist);
-            int newY = this.y + (yDist == 0 ? 0 : Integer.signum(yDist));
-            return new Knot(newX, newY);
+            return new Knot(this.x + signum(xDist), this.y + (yDist == 0 ? 0 : signum(yDist)));
         } else if (abs(yDist) == 2) {
-            int newX = this.x + (xDist == 0 ? 0 : Integer.signum(xDist));
-            int newY = this.y + Integer.signum(yDist);
-            return new Knot(newX, newY);
+            return new Knot(this.x + (xDist == 0 ? 0 : signum(xDist)), this.y + signum(yDist));
         }
         return this;
     }
