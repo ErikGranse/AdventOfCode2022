@@ -4,7 +4,6 @@ import net.loonmagnet.util.Utils;
 
 import java.util.HashSet;
 
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,6 @@ public class Day8 {
         System.out.printf("Part 2: %d%n", part2(dimY, dimX, trees));
     }
 
-    @NotNull
     protected static int[][] initialize(List<String> data, int dimY, int dimX) {
         int[][] trees = new int[dimX][dimY];
 
@@ -81,7 +79,7 @@ public class Day8 {
     }
 
     protected static int part1(int dimY, int dimX, int[][] trees) {
-        Set<Coordinate> visibleTrees = new HashSet<>();
+        Set<Knot> visibleTrees = new HashSet<>();
 
         //left to right
         for (int y = 0; y < dimY; y++) {
@@ -119,9 +117,9 @@ public class Day8 {
         return visibleTrees.size();
     }
 
-    private static int checkVisibility(Set<Coordinate> visibleTrees, int[][] trees, int y, int maxHeight, int x) {
+    private static int checkVisibility(Set<Knot> visibleTrees, int[][] trees, int y, int maxHeight, int x) {
         if (trees[x][y] > maxHeight) {
-            visibleTrees.add(new Coordinate(x, y));
+            visibleTrees.add(new Knot(x, y));
             maxHeight = trees[x][y];
         }
         return maxHeight;
