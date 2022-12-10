@@ -10,11 +10,11 @@ import static java.lang.Math.abs;
 public class Day9 {
 
     public static void main(String... args) {
-        moveRope(2);
-        moveRope(10);
+        System.out.println(moveRope(2));
+        System.out.println(moveRope(10));
     }
 
-    private static void moveRope(int length) {
+    private static int moveRope(int length) {
         final List<Knot> knots = new ArrayList<>(Collections.nCopies(length, new Knot(0, 0)));
         final Set<Knot> locations = new HashSet<>();
 
@@ -32,7 +32,7 @@ public class Day9 {
                 locations.add(knots.get(length - 1));
             }
         }
-        System.out.println(locations.size());
+        return locations.size();
     }
 }
 
