@@ -14,19 +14,15 @@ fun run(len: Int): Int {
     var knots = MutableList(len) { Knot(0, 0) }
     val locations = HashSet<Knot>()
 
-    val data = Utils.readFile("data/day9.txt").map { line -> line.split(" ") }
-    for (datum in data) {
-        repeat(datum[1].toInt()) {
-            knots = moveRope(knots, datum[0])
+    val moves = Utils.readFile("data/day9.txt").map { line -> line.split(" ") }
+    for (move in moves) {
+        repeat(move[1].toInt()) {
+            knots[0] = knots[0].move(move[0])
+            knots = knots.mapIndexed { idx, knot -> if (idx == 0) knot else knot.follow(knots[idx - 1]) }.toMutableList()
             locations.add(knots[len - 1])
         }
     }
     return locations.size
-}
-
-fun moveRope(rope: MutableList<Knot>, dir: String): MutableList<Knot> {
-    rope[0] = rope[0].move(dir)
-    return rope.mapIndexed { idx, knot -> if (idx == 0) knot else knot.follow(rope[idx - 1]) }.toMutableList()
 }
 
 data class Knot constructor(val x: Int, val y: Int) {
