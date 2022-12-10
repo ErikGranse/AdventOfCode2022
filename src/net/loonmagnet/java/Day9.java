@@ -18,15 +18,14 @@ public class Day9 {
         final List<Knot> knots = new ArrayList<>(Collections.nCopies(length, new Knot(0, 0)));
         final Set<Knot> locations = new HashSet<>();
 
-        var moves = Utils.readFile("data/day9-sample.txt")
+        var moves = Utils.readFile("data/day9.txt")
                 .stream()
                 .map(line -> line.split(" "))
-                .map(fields -> new Move(fields[0], Integer.parseInt(fields[1])))
                 .toList();
 
-        for (Move move : moves) {
-            for (int i = 0; i < move.repeat(); i++) {
-                knots.set(0, knots.get(0).move(move.dir())); //move head
+        for (var move : moves) {
+            for (int i = 0; i < Integer.parseInt(move[1]); i++) {
+                knots.set(0, knots.get(0).move(move[0])); //move head
                 for (int kn = 1; kn < length; kn++) {
                     knots.set(kn, knots.get(kn).follow(knots.get(kn - 1)));
                 }
@@ -58,7 +57,3 @@ record Knot(int x, int y) {
         return this;
     }
 }
-
-record Move(String dir, int repeat) {
-}
-
