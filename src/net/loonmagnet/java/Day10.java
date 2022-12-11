@@ -2,45 +2,73 @@ package net.loonmagnet.java;
 
 import net.loonmagnet.util.Utils;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 public class Day10 {
 
     public static void main(String ... args) {
 
         int totCycles = 0;
-        int val = 1;
-        var dataPoints = new ArrayList<Integer>();
+        int xreg = 1;
+        int dataPoints = 0;
+        int xPixel = 0;
+        int yPixel = 0;
+        String[][] pixels = initializeScreen();
 
         Queue<String[]> operations =
                 new LinkedList<>(Utils.readFile("data/day10.txt").stream().map(line -> line.split(" ")).toList());
 
-        Operation operation = getOperation(operations.remove());
+        Operation operation = getOperation(operations.remove()); //priming read
         while (operation != null) {
             operation.tick();
             totCycles++;
-            if((totCycles - 20) % 40 == 0) {
-                System.out.printf("Cycle: %d; val: %d, extended: %d%n", totCycles, val, totCycles * val);
-                dataPoints.add(val * totCycles);
-            }
+            dataPoints += getDataPoint(totCycles, xreg);
+
+            String pixel = List.of(xreg - 1, xreg, xreg + 1).contains(xPixel) ? "X" : " ";
+            pixels[yPixel][xPixel] = pixel;
+            xPixel = xPixel < 39 ? xPixel + 1 : 0;
+            if (xPixel == 0 ) yPixel = yPixel < 5 ? yPixel + 1 : 0;
+
             if (operation.isComplete()) {
-                val += operation.resolve();
+                xreg += operation.resolve();
                 operation = operations.isEmpty() ? null : getOperation(operations.remove());
-//                System.out.printf("Operation %d on cycle %d; current value is %d%n", operation.cycles, totCycles, val);
             }
-
         }
+        System.out.println(dataPoints);
+        drawScreen(pixels);
+    }
 
-        System.out.println(dataPoints.stream().reduce(Integer::sum));
+    private static void drawScreen(String[][] pixels) {
+        for (int y = 0; y < 6; y++) {
+            StringBuffer buffer = new StringBuffer();
+            for (int x = 0; x < 40; x++) {
+                buffer.append(pixels[y][x]);
+            }
+            System.out.println(buffer);
+        }
+    }
+
+    private static String[][] initializeScreen() {
+        String[][] px = new String[6][40];
+        for (int y = 0; y < 6; y++) {
+            for (int x = 0; x < 40; x++) {
+                px[y][x] = " ";
+            }
+        }
+        return px;
+    }
+
+    private static int getDataPoint(int totCycles, int xreg) {
+        if((totCycles - 20) % 40 == 0) {
+            System.out.printf("Cycle: %d; xreg: %d, extended: %d%n", totCycles, xreg, totCycles * xreg);
+            return (xreg * totCycles);
+        }
+        return 0;
     }
 
     static Operation getOperation(String... args) {
-        return switch (args[0]) {
-            case "addx" -> new Operation(2, Integer.parseInt(args[1]));
-            default -> new Operation(1);
-        };
+        if (args[0].equals("addx")) return new Operation(2, Integer.parseInt(args[1]));
+        else return new Operation(1);
     }
 }
 
